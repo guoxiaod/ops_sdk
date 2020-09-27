@@ -15,7 +15,7 @@ class LdapApi:
         self._ldap_admin_dn = ldap_admin_dn
         self._ldap_admin_password = ldap_admin_password
         # ldap_server_pool = ServerPool(["172.16.0.102",'172.16.0.103'])
-        self.ldap_server = Server(ldap_server_host, port=ldap_server_port, use_ssl=ldap_use_ssl)
+        self.ldap_server = Server(ldap_server_host, port=ldap_server_port, use_ssl=ldap_use_ssl, get_info = None)
 
     def ldap_server_test(self):
         try:
@@ -54,9 +54,9 @@ class LdapApi:
                                    raise_exceptions=False)
                 conn2.bind()
                 if conn2.result["description"] == "success":
-                    if 'email' in attr_dict:
+                    if attr_dict["email"] and len(attr_dict["email"]) > 0
                         email = attr_dict["email"][0] if isinstance(attr_dict["email"], list) else attr_dict["email"]
-                    elif 'mail' in attr_dict:
+                    elif attr_dict["mail"] and len(attr_dict["mail"]) > 0
                         email = attr_dict["mail"][0] if isinstance(attr_dict["mail"], list) else attr_dict["mail"]
                     else:
                         email = None
