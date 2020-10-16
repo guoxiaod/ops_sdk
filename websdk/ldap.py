@@ -56,7 +56,7 @@ class LdapApi:
                 if conn2.result["description"] == "success":
                     if attr_dict["email"] and len(attr_dict["email"]) > 0:
                         email = attr_dict["email"][0] if isinstance(attr_dict["email"], list) else attr_dict["email"]
-                    elif attr_dict["mail"] and len(attr_dict["mail"]) > 0
+                    elif attr_dict["mail"] and len(attr_dict["mail"]) > 0:
                         email = attr_dict["mail"][0] if isinstance(attr_dict["mail"], list) else attr_dict["mail"]
                     else:
                         email = None
