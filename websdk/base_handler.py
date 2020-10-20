@@ -9,6 +9,7 @@ Desc   : 处理API请求
 
 import jwt
 import shortuuid
+import traceback
 from .cache import get_cache
 from tornado.web import RequestHandler, HTTPError
 from .jwt_token import AuthToken

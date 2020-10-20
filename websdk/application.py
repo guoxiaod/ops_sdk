@@ -18,7 +18,9 @@ from .configs import configs
 define("addr", default='0.0.0.0', help="run on the given ip address", type=str)
 define("port", default=8000, help="run on the given port", type=int)
 define("progid", default=str(uuid()), help="tornado progress id", type=str)
-define("max_buffer_size", default = 104857600, help = "tornado max_buffer_size", type = str)
+define("max_buffer_size", default = None, help = "tornado max_buffer_size", type = int)
+define("max_body_size", default = None, help = "http_server max_body_size", type = int)
+define("body_timeout", default = None, help = "http_server body_timeout", type = int)
 
 
 class Application(tornadoApp):
@@ -29,10 +31,13 @@ class Application(tornadoApp):
         if configs.can_import:
             configs.import_dict(**settings)
         ins_log.read_log('info', '%s' % options.progid)
-        max_buffer_size = tnd_options.max_buffer_size
         super(Application, self).__init__(handlers, default_host, transforms, **configs)
-        http_server = httpserver.HTTPServer(self)
-        http_server.listen(options.port, address = options.addr, max_buffer_size = max_buffer_size)
+        http_server = httpserver.HTTPServer(self,
+            max_buffer_size = options.max_buffer_size,
+            body_timeout = options.body_timeout,
+            max_body_size = options.max_body_size
+        )
+        http_server.listen(options.port, address = options.addr)
         self.io_loop = ioloop.IOLoop.instance()
 
     def start_server(self):
