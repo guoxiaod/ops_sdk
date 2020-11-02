@@ -40,7 +40,7 @@ def convert(data):
 
 
 def check_password(data):
-    return True if re.search("^[\w@!\#\$%\^&\*\(\)\-\+\.\,\;\:]{8,40}$", data) else False
+    return True if re.search("^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$", data) and len(data) >= 8 else False
 
 
 def is_mail(text, login_mail=None):
